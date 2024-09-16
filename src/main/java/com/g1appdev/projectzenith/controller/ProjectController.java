@@ -12,19 +12,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/projects")
 public class ProjectController {
-
     @Autowired
     private ProjectService projectService;
 
     @PostMapping
     public ResponseEntity<Project> createProject(@RequestBody Project project) {
-        Project savedProject = projectService.saveProject(project);
-        return new ResponseEntity<>(savedProject, HttpStatus.CREATED);
+        Project createdProject = projectService.createProject(project);
+        return new ResponseEntity<>(createdProject, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Project> getAllProjects() {
-        return projectService.getAllProjects();
+    public ResponseEntity<List<Project>> getAllProjects() {
+        List<Project> projects = projectService.getAllProjects();
+        return new ResponseEntity<>(projects, HttpStatus.OK);
     }
-    // ... other controller methods (e.g., getProjectById, updateProject, deleteProject)
 }
