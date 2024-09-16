@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.g1appdev</groupId>
-	<artifactId>eduprojectmanagementsystem</artifactId>
+	<artifactId>projectzenith</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>eduprojectmanagementsystem</name>
-	<description>EduProject Management System</description>
+	<name>projectzenith</name>
+	<description>Project Zenith</description>
 	<url/>
 	<licenses>
 		<license/>
