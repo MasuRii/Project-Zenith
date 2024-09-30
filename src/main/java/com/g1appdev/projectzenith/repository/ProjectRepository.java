@@ -7,8 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProjectRepository extends JpaRepository<Project, Integer> {
+public interface ProjectRepository extends JpaRepository < Project, Integer > {
 
-    // Custom query methods can be added here, for example:
-    List<Project> findByStatus(Project.Status status);
+  List < Project > findByStatus(Project.Status status);
 }

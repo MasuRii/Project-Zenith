@@ -12,59 +12,54 @@ import java.util.Optional;
 @RequestMapping("/api/projects")
 public class ProjectController {
 
-    @Autowired(required = true)
-    private ProjectService projectService;
+  @Autowired(required = true)
+  private ProjectService projectService;
 
-    // Create Project
-    @PostMapping
-    public ResponseEntity<Project> createProject(@RequestBody Project project) {
-        Project createdProject = projectService.createProject(project);
-        return ResponseEntity.ok(createdProject);
-    }
+  @PostMapping
+  public ResponseEntity < Project > createProject(@RequestBody Project project) {
+    Project createdProject = projectService.createProject(project);
+    return ResponseEntity.ok(createdProject);
+  }
 
-    // Get All Projects
-    @GetMapping
-    public ResponseEntity<List<Project>> getAllProjects() {
-        List<Project> projects = projectService.getAllProjects();
-        return ResponseEntity.ok(projects);
-    }
+  @GetMapping
+  public ResponseEntity < List < Project >> getAllProjects() {
+    List < Project > projects = projectService.getAllProjects();
+    return ResponseEntity.ok(projects);
+  }
 
-    // Get Project by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Project> getProjectById(@PathVariable Integer id) {
-        Optional<Project> projectOpt = projectService.getProjectById(id);
-        return projectOpt.map(ResponseEntity::ok)
-                        .orElse(ResponseEntity.notFound().build());
-    }
+  @GetMapping("/{id}")
+  public ResponseEntity < Project > getProjectById(@PathVariable Integer id) {
+    Optional < Project > projectOpt = projectService.getProjectById(id);
+    return projectOpt.map(ResponseEntity::ok)
+      .orElse(ResponseEntity.notFound().build());
+  }
 
-    // Update Project
-    @PutMapping("/{id}")
-    public ResponseEntity<Project> updateProject(@PathVariable Integer id, @RequestBody Project projectDetails) {
-        Optional<Project> projectOpt = projectService.getProjectById(id);
-        if (projectOpt.isPresent()) {
-            Project project = projectOpt.get();
-            project.setTitle(projectDetails.getTitle());
-            project.setDescription(projectDetails.getDescription());
-            project.setStartDate(projectDetails.getStartDate());
-            project.setEndDate(projectDetails.getEndDate());
-            project.setTeacherId(projectDetails.getTeacherId());
-            project.setStatus(projectDetails.getStatus());
-            project.setDeadline(projectDetails.getDeadline());
-            Project updatedProject = projectService.updateProject(project);
-            return ResponseEntity.ok(updatedProject);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+  @PutMapping("/{id}")
+  public ResponseEntity < Project > updateProject(@PathVariable Integer id, @RequestBody Project projectDetails) {
+    Optional < Project > projectOpt = projectService.getProjectById(id);
+    if (projectOpt.isPresent()) {
+      Project project = projectOpt.get();
+      project.setTitle(projectDetails.getTitle());
+      project.setDescription(projectDetails.getDescription());
+      project.setStartDate(projectDetails.getStartDate());
+      project.setEndDate(projectDetails.getEndDate());
+      project.setTeacherId(projectDetails.getTeacherId());
+      project.setStatus(projectDetails.getStatus());
+      project.setDeadline(projectDetails.getDeadline());
+      Project updatedProject = projectService.updateProject(project);
+      return ResponseEntity.ok(updatedProject);
+    } else {
+      return ResponseEntity.notFound().build();
     }
+  }
 
-    // Delete Project
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProject(@PathVariable Integer id) {
-        try {
-            projectService.deleteProject(id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
-        }
+  @DeleteMapping("/{id}")
+  public ResponseEntity < Void > deleteProject(@PathVariable Integer id) {
+    try {
+      projectService.deleteProject(id);
+      return ResponseEntity.noContent().build();
+    } catch (Exception e) {
+      return ResponseEntity.notFound().build();
     }
+  }
 }

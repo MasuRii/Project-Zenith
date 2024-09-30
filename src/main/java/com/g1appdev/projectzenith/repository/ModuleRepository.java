@@ -7,10 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ModuleRepository extends JpaRepository<Module, Integer> {
+public interface ModuleRepository extends JpaRepository < Module, Integer > {
 
-    // This method will now work correctly
-    List<Module> findByProject_ProjectId(Integer projectId);
+  List < Module > findByProject_ProjectId(Integer projectId);
 
-    List<Module> findByStatus(Module.Status status);
+  List < Module > findByStatus(Module.Status status);
 }

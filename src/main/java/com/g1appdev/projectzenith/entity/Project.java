@@ -8,51 +8,51 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data // Generates getters, setters, toString, equals, and hashCode methods
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "projects")
 public class Project {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "project_id")
-    private Integer projectId;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "project_id")
+  private Integer projectId;
 
-    @Column(nullable = false, length = 255)
-    private String title;
+  @Column(nullable = false, length = 255)
+  private String title;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
+  @Column(columnDefinition = "TEXT")
+  private String description;
 
-    @Column(name = "start_date")
-    @Temporal(TemporalType.DATE)
-    private Date startDate;
+  @Column(name = "start_date")
+  @Temporal(TemporalType.DATE)
+  private Date startDate;
 
-    @Column(name = "end_date")
-    @Temporal(TemporalType.DATE)
-    private Date endDate;
+  @Column(name = "end_date")
+  @Temporal(TemporalType.DATE)
+  private Date endDate;
 
-    @Column(name = "teacher_id", nullable = false)
-    private Integer teacherId;
+  @Column(name = "teacher_id", nullable = false)
+  private Integer teacherId;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20, nullable = false)
-    private Status status = Status.PLANNING;
+  @Enumerated(EnumType.STRING)
+  @Column(length = 20, nullable = false)
+  private Status status = Status.PLANNING;
 
-    @Column(name = "deadline")
-    @Temporal(TemporalType.DATE)
-    private Date deadline;
+  @Column(name = "deadline")
+  @Temporal(TemporalType.DATE)
+  private Date deadline;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    @JsonManagedReference
-    private List<Module> modules;
+  @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+  @JsonManagedReference
+  private List < Module > modules;
 
-    public enum Status {
-        PLANNING,
-        IN_PROGRESS,
-        COMPLETED,
-        ARCHIVED
-    }
+  public enum Status {
+    PLANNING,
+    IN_PROGRESS,
+    COMPLETED,
+    ARCHIVED
+  }
 }
