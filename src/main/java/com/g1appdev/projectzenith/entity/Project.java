@@ -1,33 +1,58 @@
 package com.g1appdev.projectzenith.entity;
 
 import jakarta.persistence.*;
+import java.util.Date;
+import java.util.List;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data // Generates getters, setters, toString, equals, and hashCode methods
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "projects")
 public class Project {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "project_id") // Maps the field to the 'project_id' column in the database
+    private Integer projectId;
 
-    @Column(name = "name")
-    private String name;
+    @Column(nullable = false, length = 255)
+    private String title;
 
-    @Column(name = "description")
+    @Column(columnDefinition = "TEXT")
     private String description;
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
+    @Column(name = "start_date")
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
 
-    @Override
-    public String toString() {
-        return "Project{" +
-               "id=" + id +
-               ", name='" + name + '\'' +
-               ", description='" + description + '\'' +
-               '}';
+    @Column(name = "end_date")
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
+
+    @Column(name = "teacher_id", nullable = false)
+    private Integer teacherId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private Status status = Status.PLANNING;
+
+    @Column(name = "deadline")
+    @Temporal(TemporalType.DATE)
+    private Date deadline;
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Module> modules;
+
+    public enum Status {
+        PLANNING,
+        IN_PROGRESS,
+        COMPLETED,
+        ARCHIVED
     }
 }
