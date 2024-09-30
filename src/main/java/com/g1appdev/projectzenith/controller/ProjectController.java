@@ -40,11 +40,19 @@ public class ProjectController {
     // Update Project
     @PutMapping("/{id}")
     public ResponseEntity<Project> updateProject(@PathVariable Integer id, @RequestBody Project projectDetails) {
-        try {
-            projectDetails.setProject_id(id);
-            Project updatedProject = projectService.updateProject(projectDetails);
+        Optional<Project> projectOpt = projectService.getProjectById(id);
+        if (projectOpt.isPresent()) {
+            Project project = projectOpt.get();
+            project.setTitle(projectDetails.getTitle());
+            project.setDescription(projectDetails.getDescription());
+            project.setStartDate(projectDetails.getStartDate());
+            project.setEndDate(projectDetails.getEndDate());
+            project.setTeacherId(projectDetails.getTeacherId());
+            project.setStatus(projectDetails.getStatus());
+            project.setDeadline(projectDetails.getDeadline());
+            Project updatedProject = projectService.updateProject(project);
             return ResponseEntity.ok(updatedProject);
-        } catch (Exception e) {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }

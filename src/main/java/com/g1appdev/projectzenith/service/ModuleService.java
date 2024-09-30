@@ -21,7 +21,7 @@ public class ModuleService {
 
     // Create Module
     public Module createModule(Module module) {
-        Integer projectId = module.getProject().getProject_id();
+        Integer projectId = module.getProject().getProjectId();
         Optional<Project> projectOpt = projectRepository.findById(projectId);
         if (projectOpt.isPresent()) {
             module.setProject(projectOpt.get());
@@ -51,7 +51,7 @@ public class ModuleService {
         module.setStatus(moduleDetails.getStatus());
 
         if (moduleDetails.getProject() != null) {
-            Integer newProjectId = moduleDetails.getProject().getProject_id();
+            Integer newProjectId = moduleDetails.getProject().getProjectId();
             Project newProject = projectRepository.findById(newProjectId)
                 .orElseThrow(() -> new RuntimeException("Project with ID " + newProjectId + " not found."));
             module.setProject(newProject);
