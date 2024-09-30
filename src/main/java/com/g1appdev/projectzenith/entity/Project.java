@@ -17,7 +17,7 @@ public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "project_id") // Maps the field to the 'project_id' column in the database
+    @Column(name = "project_id")
     private Integer projectId;
 
     @Column(nullable = false, length = 255)
