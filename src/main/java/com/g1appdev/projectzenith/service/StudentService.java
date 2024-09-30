@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudentService {
@@ -42,6 +43,50 @@ public class StudentService {
         } catch (Exception e) {
             logger.error("Error fetching all students: {}", e.getMessage());
             throw new RuntimeException("Failed to fetch students", e);
+        }
+    }
+
+    
+    public Student updateStudent(Long id, Student studentDetails) {
+        logger.info("Updating student with id: {}", id);
+        try {
+            Optional<Student> studentOptional = studentRepository.findById(id);
+            if (studentOptional.isPresent()) {
+                Student student = studentOptional.get();
+                student.setFirstName(studentDetails.getFirstName());
+                student.setLastName(studentDetails.getLastName());
+                student.setEmail(studentDetails.getEmail());
+                student.setCourse(studentDetails.getCourse());
+                student.setYear(studentDetails.getYear());
+
+                Student updatedStudent = studentRepository.save(student);
+                logger.info("Student updated successfully: id={}", updatedStudent.getId());
+                return updatedStudent;
+            } else {
+                logger.warn("Student with id {} not found", id);
+                throw new RuntimeException("Student not found");
+            }
+        } catch (Exception e) {
+            logger.error("Error updating student: {}", e.getMessage());
+            throw new RuntimeException("Failed to update student", e);
+        }
+    }
+
+    
+    public void deleteStudent(Long id) {
+        logger.info("Deleting student with id: {}", id);
+        try {
+            Optional<Student> studentOptional = studentRepository.findById(id);
+            if (studentOptional.isPresent()) {
+                studentRepository.deleteById(id);
+                logger.info("Student deleted successfully: id={}", id);
+            } else {
+                logger.warn("Student with id {} not found", id);
+                throw new RuntimeException("Student not found");
+            }
+        } catch (Exception e) {
+            logger.error("Error deleting student: {}", e.getMessage());
+            throw new RuntimeException("Failed to delete student", e);
         }
     }
 }
