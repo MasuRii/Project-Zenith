@@ -24,24 +24,59 @@ public class Student {
     @Column(name = "year")
     private int year;
 
-    // Getters and Setters
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    @OneToOne
+    @JoinColumn(name = "user_id")  
+    private User user;
 
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
+    
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
+    public String getFirstName() {
+        return firstName;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getLastName() {
+        return lastName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-    public String getCourse() { return course; }
-    public void setCourse(String course) { this.course = course; }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public int getYear() { return year; }
-    public void setYear(int year) { this.year = year; }
+    public String getCourse() {
+        return course;
+    }
+    public void setCourse(String course) {
+        this.course = course;
+    }
+
+    public int getYear() {
+        return year;
+    }
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     @Override
     public String toString() {
@@ -52,6 +87,7 @@ public class Student {
                ", email='" + email + '\'' +
                ", course='" + course + '\'' +
                ", year=" + year +
+               ", user=" + (user != null ? user.getUsername() : "null") +
                '}';
     }
 }
